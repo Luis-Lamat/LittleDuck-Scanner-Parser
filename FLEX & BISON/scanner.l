@@ -22,6 +22,12 @@ int yywrap(){
 }
 
 int main(int, char**){
-    yylex();    
+    FILE *myfile = fopen("input.txt", "r");
+    if (!myfile) {
+        cout << "I can't open the file!" << endl;
+        return -1;
+    }
+    yyin = myfile;
+    yylex(); 
     return 0;
 }
