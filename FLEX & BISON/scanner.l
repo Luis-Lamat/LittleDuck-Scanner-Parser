@@ -3,27 +3,23 @@
 #include <iostream>
 #include <stdio.h>
 using namespace std;
+#define YY_DECL extern "C" int yylex()
 
 %}
+%%
 
-LETTER      [a-zA-Z]
-DIGIT       [0-9]
-IDENTIFIER  {LETTER}(_?{LETTER}|{DIGIT})*
-INT         {DIGIT}+
-FLOAT       {DIGIT}+\.{DIGIT}+
-STRING      \"(\\.|[^\\"])*\"
-SPACES      [ \t\r\n]
+[ \t\r\n]                       ;
+[a-zA-Z](_?([a-zA-Z]|[0-9]))*   { printf("Found an IDENTIFIER\n"); }
+[0-9]+                          { printf("Found an INT\n"); }
+[0-9]+\.[0-9]+                  { printf("Found a FLOAT\n"); }
+\"(\\.|[^\\"])*\"               { printf("Found a STRING\n"); }
+.                               { printf("Unrecognized...\n"); }
 
 %%
 
-{SPACES}    ;
-{IDENTIFIER}{ printf("Found an IDENTIFIER\n"); }
-{INT}       { printf("Found an INT\n"); }
-{FLOAT}     { printf("Found a FLOAT\n"); }
-{STRING}    { printf("Found a STRING\n"); }
-.           { printf("Unrecognized...\n"); }
-
-%%
+int yywrap(){
+    return 1;
+}
 
 int main(int, char**){
     yylex();    
