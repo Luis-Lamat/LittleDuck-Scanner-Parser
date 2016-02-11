@@ -1,5 +1,9 @@
-lol one_two 90 90.09 lol_lol_
-
-"Stringlhqewf quhf q3fuleriugh)$#*@#&*$&! 3$*@( µ¬´ˆƒ∆"
-
-LOL
+program a1;
+var a : int; b: float;
+{
+    a= 23;
+    b = (2.2 + 5.0);
+    if(2 >+ 3){
+        print("hola", 5);
+    };
+}

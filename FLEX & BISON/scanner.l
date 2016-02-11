@@ -2,32 +2,43 @@
 
 #include <iostream>
 #include <stdio.h>
+#include "parser.tab.h" // token definition
 using namespace std;
 #define YY_DECL extern "C" int yylex()
 
 %}
 %%
 
-[ \t\r\n]                       ;
-[a-zA-Z](_?([a-zA-Z]|[0-9]))*   { printf("Found an IDENTIFIER\n"); }
-[0-9]+                          { printf("Found an INT\n"); }
-[0-9]+\.[0-9]+                  { printf("Found a FLOAT\n"); }
-\"(\\.|[^\\"])*\"               { printf("Found a STRING\n"); }
-.                               { printf("Unrecognized...\n"); }
+"+"                             { return OP_PLUS; }
+"-"                             { return OP_MINUS; }
+"*"                             { return OP_TIMES; }
+"/"                             { return OP_DIVISION; }
+"<"                             { return OP_LESS_THAN; }
+">"                             { return OP_GREATER_THAN; }
+"<>"                            { return OP_NOT_EQUAL; }
+"="                             { return OP_EQUALS; }
+"("                             { return SEP_LPAR; }
+")"                             { return SEP_RPAR; }
+"{"                             { return SEP_LCBRACKET; }
+"}"                             { return SEP_RCBRACKET; }
+","                             { return SEP_COMMA; }
+":"                             { return SEP_COLON; }
+";"                             { return SEP_SEMICOLON; }
+"int"                           { return INT; }
+"float"                         { return FLOAT; }
+"if"                            { return IF; }
+"else"                          { return ELSE; }
+"var"                           { return VAR; }
+"print"                         { return PRINT; }
+"program"                       { return PROGRAM; }
+[ \t\r\n]                       { ; }
+[a-zA-Z](_?([a-zA-Z]|[0-9]))*   { yylval.sval = strdup(yytext); return VAR_IDENTIFIER; }
+[0-9]+                          { yylval.ival = atoi(yytext); return VAR_INT; }
+[0-9]+\.[0-9]+                  { yylval.fval = atof(yytext); return VAR_FLOAT; }
+\"(\\.|[^\\"])*\"               { yylval.sval = strdup(yytext); return VAR_STRING; }
+.                               { printf("Unrecognized char: %s\n", yytext); }
 
 %%
 
-int yywrap(){
-    return 1;
-}
+int yywrap(){ return 1; }
 
-int main(int, char**){
-    FILE *myfile = fopen("input.txt", "r");
-    if (!myfile) {
-        cout << "I can't open the file!" << endl;
-        return -1;
-    }
-    yyin = myfile;
-    yylex(); 
-    return 0;
-}
