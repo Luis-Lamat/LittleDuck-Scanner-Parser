@@ -5,6 +5,8 @@
 
     extern "C" int yylex();
     extern "C" int yyparse();
+    extern "C" int yylineno;
+    extern "C" int yytext;
     extern "C" FILE *yyin;
      
     void yyerror(const char *s);
@@ -47,7 +49,7 @@
 %%
 
 programa : 
-    PROGRAM VAR_IDENTIFIER SEP_SEMICOLON pr_a bloque;
+    PROGRAM VAR_IDENTIFIER SEP_SEMICOLON pr_a bloque {printf("Syntax is valid!\n");} ;
 pr_a : 
     vars
     | ;
@@ -81,14 +83,15 @@ estatuto :
     | escritura;
 
 asignacion :
-    VAR_IDENTIFIER OP_EQUALS expresion;
+    VAR_IDENTIFIER OP_EQUALS expresion SEP_SEMICOLON;
 
 expresion :
     exp ex_a;
 ex_a :
     OP_GREATER_THAN exp
     | OP_LESS_THAN exp
-    | OP_NOT_EQUAL exp;
+    | OP_NOT_EQUAL exp
+    | ;
 
 escritura :
     PRINT SEP_LPAR es_a SEP_RPAR SEP_SEMICOLON;
@@ -150,6 +153,7 @@ int main(){
 }
 
 void yyerror(const char *s) {
-    cout << "Parse error!  Message: " << s << endl;
+    printf("Parse error (%s) at line %d with token '%d'\n", s, yylineno, yytext);
+    // cout << "Parse error!  Message: " << s << endl;
     exit(-1);
 }

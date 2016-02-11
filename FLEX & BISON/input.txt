@@ -1,9 +1,14 @@
-program a1;
-var a : int; b: float;
+program a4;
+var a, b, c : int;
 {
-    a= 23;
-    b = (2.2 + 5.0);
-    if(2 >+ 3){
-        print("hola", 5);
-    };
+    a = -5;
+    b = 2;
+    if (4 <> 5 )
+    {
+        b = a;
+}
+else
+{
+    print( a, b);
+};
 }

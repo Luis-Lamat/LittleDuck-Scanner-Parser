@@ -891,39 +891,35 @@ YY_RULE_SETUP
 case 24:
 YY_RULE_SETUP
 #line 35 "scanner.l"
-{ // yylval.sval = strdup(yytext); 
-    return VAR_IDENTIFIER; }
+{ yylval.sval = strdup(yytext); return VAR_IDENTIFIER; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 37 "scanner.l"
-{ // yylval.ival = atoi(yytext); 
-    return VAR_INT; }
+#line 36 "scanner.l"
+{ yylval.ival = atoi(yytext); return VAR_INT; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 39 "scanner.l"
-{ // yylval.fval = atof(yytext); 
-    return VAR_FLOAT; }
+#line 37 "scanner.l"
+{ yylval.fval = atof(yytext); return VAR_FLOAT; }
 	YY_BREAK
 case 27:
 /* rule 27 can match eol */
 YY_RULE_SETUP
-#line 41 "scanner.l"
-{ // yylval.sval = strdup(yytext); 
-    return VAR_STRING; }
+#line 38 "scanner.l"
+{ yylval.sval = strdup(yytext); return VAR_STRING; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 43 "scanner.l"
+#line 39 "scanner.l"
 { printf("Unrecognized char: %s\n", yytext); }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 45 "scanner.l"
+#line 41 "scanner.l"
 ECHO;
 	YY_BREAK
-#line 927 "lex.yy.c"
+#line 923 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1920,24 +1916,10 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 45 "scanner.l"
+#line 41 "scanner.l"
 
 
 
 int yywrap(){ return 1; }
 
-int main(int, char**) {
-    
-    // open a file handle to a particular file:
-    FILE *myfile = fopen("input.txt", "r");
-    // make sure it's valid:
-    if (!myfile) {
-        cout << "I can't open the file!" << endl;
-        return -1;
-    }
-    // set lex to read from it instead of defaulting to STDIN:
-    yyin = myfile;
-    
-    // lex through the input:
-    yylex();
-}
+
