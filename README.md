@@ -1,5 +1,5 @@
 # LittleDuck Scanner & Parser
-This are simple scanner and parser generating tools for a sample programming language called "LittleDuck" made for my 
+These are simple scanner and parser generating tools for a small programming language called "LittleDuck" made for my 
 compilers class. I used two different tools to create the scanner and parser for this language: 
 [Flex](http://flex.sourceforge.net/manual/)/[Bison](https://www.gnu.org/software/bison/) and [ANTLR](http://www.antlr.org/), so
 I'll show you how to compile and run each version separately (**Note**: this is in a Unix machine).
