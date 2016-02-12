@@ -134,8 +134,8 @@
 
     extern "C" int yylex();
     extern "C" int yyparse();
-    extern "C" int yylineno;
-    extern "C" int yytext;
+    extern "C" char *yytext;
+    extern "C" int line_num;
     extern "C" FILE *yyin;
      
     void yyerror(const char *s);
@@ -1681,7 +1681,6 @@ int main(){
 }
 
 void yyerror(const char *s) {
-    printf("Parse error (%s) at line %d with token '%d'\n", s, yylineno, yytext);
-    // cout << "Parse error!  Message: " << s << endl;
+    printf("Syntax error (line %d): unexpected token '%s'\n", line_num, yytext);
     exit(-1);
 }

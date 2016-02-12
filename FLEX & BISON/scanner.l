@@ -6,6 +6,8 @@
 using namespace std;
 #define YY_DECL extern "C" int yylex()
 
+int line_num = 1;
+
 %}
 %%
 
@@ -31,12 +33,13 @@ using namespace std;
 "var"                           { return VAR; }
 "print"                         { return PRINT; }
 "program"                       { return PROGRAM; }
-[ \t\r\n]                       { ; }
+[ \t\r]                         { ; }
+[\n]                            { line_num++; }
 [a-zA-Z](_?([a-zA-Z]|[0-9]))*   { yylval.sval = strdup(yytext); return VAR_IDENTIFIER; }
 [0-9]+                          { yylval.ival = atoi(yytext); return VAR_INT; }
 [0-9]+\.[0-9]+                  { yylval.fval = atof(yytext); return VAR_FLOAT; }
 \"(\\.|[^\\"])*\"               { yylval.sval = strdup(yytext); return VAR_STRING; }
-.                               { printf("Unrecognized char: %s\n", yytext); }
+.                               { printf("Invalid token (line %d): '%s'\n", line_num, yytext); exit(-1); }
 
 %%
 
